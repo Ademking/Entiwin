@@ -1,0 +1,17 @@
+<div class="flex items-center justify-center h-screen bg-blue-600 ">
+
+    <div class="p-10" [ngClass]="{'rtl': currentLang == 'ar'}">
+        <span class="text-5xl text-white">
+            {{ 'game.ismobile.title' | translate }} :(
+        </span>
+        <br>
+        <span class="text-white text-xl opacity-50">{{ 'game.ismobile.desc' | translate }}</span>
+
+        <div class="pt-4 mt-4 bg-contain bg-center bg-no-repeat w-full h-56 "
+            style="background-image:url('assets/not-available.png')">
+        </div>
+    </div>
+
+
+
+</div>

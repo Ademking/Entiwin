@@ -1,0 +1,136 @@
+/** Colors variables */
+/** share button variables */
+/** share buttons colors */
+/** Colors variables */
+/** share button variables */
+/** share buttons colors */
+.sb-group,
+.sb-button {
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.sb-group {
+  flex-wrap: wrap;
+}
+
+.sb-button {
+  margin: var(--sb-margin);
+}
+
+/** Default style */
+.sb-wrapper {
+  font-size: inherit;
+  cursor: pointer;
+  position: relative;
+  outline: 0;
+  min-width: 4.125em;
+  height: 2.5em;
+  border: none;
+  border-radius: 1px;
+  padding: 0;
+  line-height: 2.571em;
+  background-color: transparent;
+  -webkit-print-color-adjust: exact;
+}
+.sb-wrapper .sb-icon,
+.sb-wrapper .sb-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+.sb-wrapper .sb-content {
+  flex: 1;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.sb-wrapper .sb-text {
+  flex: 1;
+  height: 100%;
+  white-space: nowrap;
+  padding: 0 0.7em;
+}
+.sb-wrapper .sb-icon {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1.2em;
+  min-width: 2em;
+}
+.sb-wrapper .sb-text {
+  font-weight: bold;
+}
+
+.sb-default .sb-wrapper {
+  color: white;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--button-color) !important;
+}
+.sb-default .sb-wrapper.sb-facebook {
+  background-color: #4267B2;
+}
+.sb-default .sb-wrapper.sb-twitter {
+  background-color: #00acee;
+}
+.sb-default .sb-wrapper.sb-google {
+  background-color: #db4437;
+}
+.sb-default .sb-wrapper.sb-mix {
+  background-color: #ff8226;
+}
+.sb-default .sb-wrapper.sb-line {
+  background-color: #00b900;
+}
+.sb-default .sb-wrapper.sb-linkedin {
+  background-color: #006fa6;
+}
+.sb-default .sb-wrapper.sb-pinterest {
+  background-color: #bd081c;
+}
+.sb-default .sb-wrapper.sb-reddit {
+  background-color: #ff4006;
+}
+.sb-default .sb-wrapper.sb-tumblr {
+  background-color: #36465d;
+}
+.sb-default .sb-wrapper.sb-whatsapp {
+  background-color: #25d366;
+}
+.sb-default .sb-wrapper.sb-messenger {
+  background-color: #0080FF;
+}
+.sb-default .sb-wrapper.sb-telegram {
+  background-color: #0088cc;
+}
+.sb-default .sb-wrapper.sb-xing {
+  background-color: #006567;
+}
+.sb-default .sb-wrapper.sb-sms {
+  background-color: #20c16c;
+}
+.sb-default .sb-wrapper.sb-email {
+  background-color: #FF961C;
+}
+.sb-default .sb-wrapper.sb-vk {
+  background-color: #4C75A3;
+}
+.sb-default .sb-wrapper.sb-copy {
+  background-color: #607D8B;
+}
+.sb-default .sb-wrapper.sb-print {
+  background-color: #765AA2;
+}
+.sb-default .sb-wrapper.sb-expand {
+  background-color: #FF6651;
+}
+.sb-default .sb-wrapper.sb-show-icon.sb-show-text .sb-text {
+  filter: none;
+  padding-right: 1em;
+  padding-left: 0;
+}
+
+/*# sourceMappingURL=default-theme.css.map */

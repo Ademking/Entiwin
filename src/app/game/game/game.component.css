@@ -1,0 +1,36 @@
+:focus {
+  outline: none;
+}
+
+span.ui-column-resizer {
+    display : block;
+    position: absolute;
+    top     : 0;
+    right   : 0;
+    margin  : 0;
+    width   : 8px;
+    height  : 100%;
+    padding : 0;
+    cursor  : col-resize;
+    border  : 1px solid transparent;
+}
+
+.active {
+    background   : white;
+    border-radius: 9999px;
+    color        : #63b3ed;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.rtl {
+  direction: rtl !important;
+}

@@ -1,0 +1,171 @@
+<div class="flex items-center justify-center h-screen" style="background-color: #f2f6fa;">
+    <div class="p-10">
+
+        <img src="assets/loading.gif" alt="" srcset="" class="fade-in h-64">
+
+    </div>
+</div>
+
+
+<ng-container *ngIf="showModal">
+    <div *ngIf="!isModalOpen"
+        class="z-50 fade-in duration-100 modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center"
+        [ngClass]="{'opacity-0': isModalOpen, 'pointer-events-none': isModalOpen}">
+        <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+
+        <div class="modal-container bg-white w-11/12 md:max-w-3xl mx-auto rounded-md shadow-lg z-50 overflow-y-auto">
+
+            <div class="bg-contain bg-center bg-no-repeat w-full h-56"
+                style="background-image:url('assets/welcome-tunisia-flag.gif')">
+            </div>
+
+
+            <!-- <div (click)="toggleModal()"
+                class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+                <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                    viewBox="0 0 18 18">
+                    <path
+                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                    </path>
+                </svg>
+                <span class="text-sm">(Esc)</span>
+            </div> -->
+
+            <!-- Add margin if you want to see some of the overlay behind the modal-->
+            <div class="modal-content  py-4 px-6">
+
+
+                <!--Title-->
+                <div [ngClass]="{'rtl': lang == 'ar'}" class=" text-center items-center pb-3">
+                    <p class="text-2xl font-bold" [ngClass]="{'rtl': lang == 'ar'}">{{'home.title' | translate}} 🗺️🔍
+                    </p>
+                </div>
+
+                <!--Body-->
+                <div [ngClass]="{'rtl': lang == 'ar'}" class="flex justify-between items-center pb-3">
+                    <p [ngClass]="{'rtl': lang == 'ar'}">{{ 'home.description' | translate}}</p>
+
+
+                </div>
+                <!--Help-->
+
+
+
+                <div [ngClass]="{'rtl flex-column-reverse': lang == 'ar'}" class="flex pb-3">
+                    <div class="p-2 w-1/12 ">
+                        <div class="text-center">
+                            <img src="assets/maplogo.png" class="w-10" alt="" srcset="">
+                        </div>
+                    </div>
+                    <div class="w-11/12">
+                        <p class="text-sm" [ngClass]="{'rtl': lang == 'ar'}">{{ 'home.help' | translate}}</p>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <h1 class="text-center font-bold text-xs">{{ 'home.selectDifficulty' | translate }}</h1>
+
+                <div class="flex justify-center p-2 pl-4">
+
+
+                    <!-- select language -->
+                    <div class="flex justify-center" style="position: fixed;top: 2rem;right: 2rem;">
+                        <div
+                            class="bg-gray-400 text-md text-gray-500 leading-none border-2 border-gray-400 rounded-full inline-flex">
+
+                            <button tooltip="العربية" [options]="tooltipOptions" (click)="setLang('ar')"
+                                [ngClass]="{'active': lang == 'ar'}"
+                                class="inline-flex items-center transition-colors duration-200 ease-in focus:outline-none hover:text-grey-400 rounded-l-full px-2 py-2"
+                                id="grid">
+                                <div class="fill-current w-4 h-4 mx-2">
+                                    <img src="assets/tunisia-flag.svg" alt="" srcset="">
+                                </div>
+                                <span *ngIf="lang == 'ar'" class="pr-2">العربية</span>
+                            </button>
+                            <button tooltip="Français" [options]="tooltipOptions" (click)="setLang('fr')"
+                                [ngClass]="{'active': lang == 'fr'}"
+                                class="inline-flex items-center transition-colors duration-200 ease-in focus:outline-none hover:text-grey-400 focus:text-grey-400 rounded-l-full px-2 py-2"
+                                id="grid">
+                                <div class="fill-current w-4 h-4 mx-2">
+                                    <img src="assets/france-flag.svg" alt="" srcset="">
+                                </div>
+                                <span *ngIf="lang == 'fr'" class="pr-2">Français</span>
+                            </button>
+                            <button tooltip="English" [options]="tooltipOptions" (click)="setLang('en')"
+                                [ngClass]="{'active': lang == 'en'}"
+                                class="inline-flex items-center transition-colors duration-200 ease-in focus:outline-none hover:text-grey-400 focus:text-grey-400 rounded-l-full px-2 py-2"
+                                id="grid">
+                                <div class="fill-current w-4 h-4 mx-2">
+                                    <img src="assets/usa-flag.svg" alt="" srcset="">
+                                </div>
+                                <span *ngIf="lang == 'en'" class="pr-2">English</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- select lang end -->
+
+
+
+                    <div class="flex justify-center px-2">
+
+                        <div
+                            class="bg-gray-300 text-md text-gray-500 leading-none border-2 border-gray-300 rounded-full inline-flex">
+                            <button (click)="setLevel('easy')" [ngClass]="{'active': level == 'easy'}"
+                                class="inline-flex items-center transition-colors duration-200 ease-in focus:outline-none hover:text-grey-400 focus:text-grey-400 rounded-l-full px-4 py-2"
+                                id="grid">
+                                <div class="fill-current w-4 h-4 mr-2">
+                                    <img src="assets/star.svg" alt="" srcset="">
+                                </div>
+                                <span>{{ 'home.difficulty.easy' | translate }}</span><span class="pl-2"
+                                    *ngIf="level === 'easy'">✔️</span>
+                            </button>
+                            <button (click)="setLevel('medium')" [ngClass]="{'active': level == 'medium'}"
+                                class="inline-flex items-center transition-colors duration-200 ease-in focus:outline-none hover:text-grey-400 rounded-l-full px-4 py-2"
+                                id="grid">
+                                <div class="inline fill-current w-4 h-4">
+                                    <img src="assets/star.svg" alt="" srcset="">
+                                </div>
+                                <div class="inline fill-current w-4 h-4 mr-2">
+                                    <img src="assets/star.svg" alt="" srcset="">
+                                </div>
+                                <span>{{ 'home.difficulty.medium' | translate }}</span><span class="pl-2"
+                                    *ngIf="level === 'medium'">✔️</span>
+                            </button>
+                            <button (click)="setLevel('hard')" [ngClass]="{'active': level == 'hard'}"
+                                class="inline-flex items-center transition-colors duration-200 ease-in focus:outline-none hover:text-grey-400 focus:text-grey-400 rounded-l-full px-4 py-2"
+                                id="grid">
+                                <div class="inline fill-current w-4 h-4">
+                                    <img src="assets/star.svg" alt="" srcset="">
+                                </div>
+                                <div class="inline fill-current w-4 h-4">
+                                    <img src="assets/star.svg" alt="" srcset="">
+                                </div>
+                                <div class="inline fill-current w-4 h-4 mr-2">
+                                    <img src="assets/star.svg" alt="" srcset="">
+                                </div>
+                                <span>{{ 'home.difficulty.hard' | translate }}</span>
+                                <span class="pl-2" *ngIf="level === 'hard'">✔️</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--Footer-->
+                <div class="flex justify-end pt-2">
+
+
+
+                    <button [routerLink]="['/game', level]" [ngClass]="{'rtl': lang == 'ar'}"
+                        class="shadow-lg w-screen bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded"> {{ 'home.newgame' | translate }} 🎲</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+</ng-container>

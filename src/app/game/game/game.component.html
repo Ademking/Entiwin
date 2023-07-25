@@ -1,0 +1,267 @@
+<div class="flex flex-wrap overflow-hidden" style="height: 100vh;" [ngClass]="{'modal-active': isModalOpen}">
+
+  <!-- column 1 -->
+  <div joyrideStep="firstStep" text="{{ 'help.firststep' | translate }}" stepPosition="right"
+    class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 bg-gray-500">
+
+    <div class="z-0 map" style="height: 100vh;" leaflet [leafletOptions]="options" [leafletLayers]="markers"
+      (leafletClick)="onMapClick($event)" (leafletMapReady)="onMapReady($event)">
+    </div>
+  </div>
+
+  <!-- column 2 -->
+  <div joyrideStep="secondStep" text="{{ 'help.secondstep' | translate }}" stepPosition="left"
+    class="w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2 bg-gray-500">
+
+    <iframe *ngIf="isGameStarted" (load)="iframeLoaded()" frameBorder="0" [src]="urlSafe" allowfullscreen=""
+      aria-hidden="true" tabindex="0" style="width: 100%; height: calc(100% + 150px); margin-top: -150px;">
+    </iframe>
+  </div>
+
+
+</div>
+
+<!-- Confirm Button -->
+<div
+  style="position: absolute;bottom: 0px;margin-right: auto;margin-left: auto;left: 50%;transform: translate(-50%, 0);"
+  class="pb-6" [ngClass]="{'rtl': currentLang == 'ar'}">
+  <div class="select-none flex items-center justify-center w-ful text-white">
+    <!-- Confirm button -->
+    <div *ngIf="guesslat != 0" [@enterAnimation] (click)="confirm()"
+      class="cursor-pointer transition duration-150 ease-in-out bottom-0 z-50 max-w-xs mx-auto flex p-6 bg-white rounded-full shadow-xl   ">
+      <div class="flex-shrink-0">
+        <img class="h-12 w-12" src="https://i.pinimg.com/originals/ce/87/be/ce87bec6960894a07cff91a3a4a7615e.png"
+          alt="">
+      </div>
+      <div class="ml-4 pt-1">
+        <h4 class="text-xl text-gray-900 leading-tight">{{ 'game.confirm.title' | translate }}</h4>
+        <p class="text-xs text-gray-600 leading-normal">{{ 'game.confirm.desc' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- center top -->
+<div style="position: absolute;top: 0px;margin-right: auto;margin-left: auto;left: 50%;transform: translate(-50%, 0);"
+  class="pt-4">
+  <div class="flex items-center justify-center w-full ">
+  </div>
+</div>
+
+
+
+<!-- top right side -->
+<div class="absolute top-0 right-0 mr-8 mt-4">
+  <!--light mode - text and icons-->
+  <div class="p-2 text-gray-900 bg-white rounded-lg shadow-lg font-medium capitalize">
+
+
+    
+    <span [tooltip]="'game.home.tooltip' | translate" [options]="tooltipOptions" (click)="goTo('/home')"
+      class="px-1 w-8 relative cursor-pointer hover:text-gray-700">
+      <i class="fas fa-home p-2 bg-gray-200 rounded-full text-center">
+      </i>
+    </span>
+    <span [tooltip]="'game.reset.tooltip' | translate" [options]="tooltipOptions" (click)="resetStreetView()"
+      class="px-1 cursor-pointer hover:text-gray-700">
+      <i class="fas fa-sync p-2 bg-gray-200 rounded-full text-center">
+      </i>
+    </span>
+    <span [tooltip]="'game.help.tooltip' | translate" [options]="tooltipOptions" (click)="showHelp()"
+      class="px-1 w-8 relative cursor-pointer hover:text-gray-700">
+      <i class="w-8 fas fa-question p-2 bg-gray-200 rounded-full text-center">
+      </i>
+    </span>
+    <span [tooltip]="'game.fullscreen.tooltip' | translate" [options]="tooltipOptions" (click)="toggleFullScreen()"
+      class="px-1 w-8 relative cursor-pointer hover:text-gray-700">
+      <i class="w-8 fas p-2 bg-gray-200 rounded-full text-center"
+        [ngClass]="{'fa-expand': !isFullScreen , 'fa-compress': isFullScreen}">
+      </i>
+    </span>
+    <span [tooltip]="'game.audio.tooltip' | translate" [options]="tooltipOptions" (click)="toggleAudio()"
+      class="px-1 w-8 relative cursor-pointer hover:text-gray-700">
+      <i class="w-8 fas p-2 bg-gray-200 rounded-full text-center"
+        [ngClass]="{'fa-volume-up': isAudioOn , 'fa-volume-mute': !isAudioOn}">
+      </i>
+    </span>
+    <span [tooltip]="'Github'" [options]="tooltipOptions" (click)="goTo('https://github.com/Ademking/Entiwin')" 
+      class="px-1 w-8 relative cursor-pointer hover:text-gray-700">
+      <i class="fab fa-github p-2 bg-gray-200 rounded-full text-center">
+      </i>
+    </span>
+  </div>
+
+</div>
+
+
+
+<!-- top left side -->
+<div [ngClass]="{'rtl': currentLang == 'ar'}" class="absolute top-0 left-0 ml-16 mt-4 noselect">
+  <!--light mode - text and icons-->
+  <div class="p-2 text-gray-900 bg-white rounded-lg shadow-lg font-medium capitalize">
+    <span class="px-2 ">
+      <img src="assets/marker.gif" alt="alt placeholder" class="h-8 -mt-1 inline mx-auto text-lg">
+    </span>
+    <span joyrideStep="thirdStep" (done)="helpOnDone()" stepPostion="bottom"
+      text="{{ 'help.leveldifficulty' | translate}}" class="px-2 py-1 text-sm rounded mb-5">
+      <i class="w-8 fas fa-star p-2 bg-green-200 rounded-full text-center">
+      </i>
+      <span [tooltip]="'game.difficulty.tooltip' | translate" [options]="tooltipOptions" class="mx-1">
+        <span *ngIf="difficulty == 'easy'" class="text-gray-800 px-2 text-md font-bold">{{ 'game.difficulty.easy' |
+          translate:{'distance':this.maxDistance } }}</span>
+        <span *ngIf="difficulty == 'medium'" class="text-gray-800 px-2 text-md font-bold">{{ 'game.difficulty.medium' |
+          translate:{'distance':this.maxDistance } }}</span>
+        <span *ngIf="difficulty == 'hard'" class="text-gray-800 px-2 text-md font-bold">{{ 'game.difficulty.hard' |
+          translate:{'distance':this.maxDistance } }}</span>
+      </span>
+    </span>
+    <span joyrideStep="yourscoreStep" stepPostion="bottom" text="{{ 'help.yourscore' | translate}}"
+      [tooltip]="'game.points.tooltip' | translate" [options]="tooltipOptions" class="px-2 py-1 text-sm rounded mb-5">
+      <i class="w-8 fas fa-dice p-2 bg-red-200 rounded-full text-center">
+      </i>
+      <span class="mx-1"><strong class="text-gray-800 pl-2 text-md">{{ 'game.points' | translate:{'pts': score}
+          }}</strong></span>
+    </span>
+    <span joyrideStep="roundsStep" stepPostion="bottom" text="{{ 'help.rounds' | translate}}"
+      [tooltip]="'game.rounds.tooltip' | translate" [options]="tooltipOptions" class="px-2 py-1 text-sm rounded mb-5">
+      <i class="w-8 fas fa-globe-americas p-2 bg-yellow-200 rounded-full text-center">
+      </i>
+      <span class="mx-1"><strong class="text-gray-800 text-md">{{ round }} / {{ gamerounds }} </strong></span>
+    </span>
+
+  </div>
+
+</div>
+
+
+
+
+<!-- Round Modal start -->
+<div *ngIf="showRoundResult"
+  class="overflow-x-hidden rounded overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-3xl">
+    <!--content-->
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+
+      <!--body-->
+      <div class="relative flex-auto">
+        <app-minimap [coordinates]="[this.guesslat, this.guesslong, this.actualViewPlace[0], this.actualViewPlace[1]]">
+        </app-minimap>
+        <p class="mt-4 mb-2 mx-4 text-gray-600 text-md flex justify-center">
+          {{ 'game.roundresult.desc' | translate:{'distance': distance} }}</p>
+        <p class="mt-2 mb-2 mx-4 text-gray-600 text-2xl flex justify-center"
+          [ngClass]="{'text-green-600': isRoundWon, 'text-red-600': !isRoundWon}">
+          {{ isRoundWon ? ('game.roundresult.win' | translate ) : ('game.roundresult.lose' | translate ) }}
+        </p>
+        <p class="mt-2 mb-4  mx-4 text-gray-600 text-xl flex justify-center">
+          {{ 'game.roundresult.yougotpoints' | translate:{'pts': roundPoints} }}</p>
+
+
+
+
+        <div [ngClass]="{'rtl' : currentLang == 'ar'}" class="flex">
+          <div class="pt-4 w-40 text-center">
+            <div class="grid grid-cols-1">
+              <i class="fas fa-user text-center text-md text-blue-600">
+              </i>
+              <span>
+                {{ 'game.roundresult.score' | translate:{'pts': this.score } }}
+              </span>
+            </div>
+          </div>
+          <!-- Progress bar -->
+          <div class="w-full py-4 pl-4">
+            <div class="w-auto bg-blue-200">
+              <div class="bg-blue-500 text-xs leading-none py-1 text-center text-white"
+                [style.width]="winProgressPercentage < 3 ? ((winProgressPercentage + 3) + '%') : (winProgressPercentage + '%')">
+                {{ winProgressPercentage }}% </div>
+            </div>
+          </div>
+          <!--icon -->
+          <div class="pt-4 pr-4 pl-6 text-center">
+            <p><i class="fas fa-trophy text-center text-xl text-blue-600"></i>{{ this.maxGamePoints }}</p>
+          </div>
+        </div>
+
+
+        <!-- End Progress bar -->
+      </div>
+      <!--footer-->
+      <div class="flex justify-end pt-2">
+        <button (click)="handlePlayNextRound()"
+          class="shadow-lg w-screen bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">{{
+          'game.roundresult.playnextround' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showRoundResult" class="opacity-50 fixed inset-0 z-40 bg-black"></div>
+<!-- Round Modal end-->
+
+
+<!-- Game OVER Modal start -->
+<div *ngIf="showGameOverModal"
+  class="overflow-x-hidden rounded overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-3xl">
+    <!--content-->
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+      <!--body-->
+
+
+      <!-- <div class="flex">
+        <div class="flex text-center px-10 py-2 m-2">
+          <img *ngIf="isGameWon" class="w-40 ml-10 py-4" src="assets/trophy.png" alt="" srcset="">
+          <img  *ngIf="!isGameWon" class=" ml-10 py-4" src="assets/gameover.gif" alt="" srcset="">
+        </div>
+        <div class="flex-auto text-center px-4 py-2 m-2 items-center justify-center">
+          <p class="pt-8 mx-4 text-gray-600 text-md">{{ 'game.yourscore' | translate }}</p>
+          <p class="p-0 m-0 mx-4 text-gray-600" style="font-size: 6rem">{{ score }}</p>
+          <p class="mt-2 mb-4  mx-4 text-gray-600 text-xl">{{ 'game.wingame' | translate }}</p>
+          <p class="mt-2 mb-4  mx-4 text-gray-600 text-xl">
+            Share with your friends
+          </p>
+        </div>
+        
+      </div> -->
+
+      <div class="p-4 max-w-sm w-full lg:max-w-full flex">
+        <div *ngIf="isGameWon"
+          class="h-auto flex-none bg-contain bg-no-repeat bg-center rounded-t rounded-t-none rounded-l text-center overflow-hidden"
+          style="background-image: url('assets/trophy.png'); width: 21rem;">
+        </div>
+        <div *ngIf="!isGameWon"
+          class="h-auto flex-none bg-contain bg-no-repeat bg-center rounded-t rounded-t-none rounded-l text-center overflow-hidden"
+          style="background-image: url('assets/gameover.gif'); width: 21rem;">
+        </div>
+        <div
+          class="w-full bg-white rounded-b rounded-b-none rounded-r p-4 flex flex-col justify-between leading-normal">
+          <div class="text-center">
+            <p class="mx-4 text-gray-600 text-md">{{ 'game.yourscore' | translate }}</p>
+            <p class="p-0 m-0 mx-4 text-gray-600" style="font-size: 6rem">{{ score }}</p>
+            <p *ngIf="isGameWon" class="mx-4 text-gray-600 text-xl">{{ 'game.wingame' | translate }}</p>
+            <p *ngIf="!isGameWon" class="mx-4 text-gray-600 text-xl">{{ 'game.losegame' | translate }}</p>
+            <p class="mx-4 text-gray-600 text-xl">
+              {{ 'game.sharegame' | translate }}
+            </p>
+            <p class="py-3 mx-4 text-gray-600 text-xl">👇</p>
+            <share-buttons [theme]="'modern-dark'"
+              [include]="['copy', 'facebook','twitter','whatsapp','linkedin','email']" [size]="-4" [show]="6"
+              [showText]="false" [url]="'https://entiwin.surge.sh/'"></share-buttons>
+          </div>
+
+        </div>
+      </div>
+
+      <!--footer-->
+      <div class="flex justify-end pt-2">
+        <button (click)="handleReplay()"
+          class="shadow-lg w-screen bg-green-500 hover:bg-green-400 text-white font-bold py-4 px-4 border-b-4 border-green-700 hover:border-green-500 rounded">{{
+          'game.replay' | translate }}
+          🎲</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showGameOverModal" class="opacity-50 fixed inset-0 z-40 bg-black"></div>
+<!-- Game OVER Modal end-->
